@@ -6,6 +6,15 @@ on:
       - deploy
 
   workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
 
 jobs:
   deploy:
@@ -21,7 +30,14 @@ jobs:
           port: 22
           script: |
             cd /home/ubuntu/neswear-deploy
+            if [ "${{ github.event.inputs.environment }}" = "prod" ]; then
+              cp .env.prod.example .env
+            elif [ "${{ github.event.inputs.environment }}" = "staging" ]; then
+              cp .env.staging.example .env
+            else
+              cp .env.dev.example .env
+            fi
             git pull
             docker compose pull
             docker compose up -d 
-            # docker compose exec -T backend npm run seed
+            docker compose exec -T backend npm run seed
