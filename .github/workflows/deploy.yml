@@ -29,7 +29,7 @@ jobs:
           key: ${{ secrets.VM_SSH_KEY }}
           port: 22
           script: |
-            cd /home/ubuntu/neswear-deploy
+            cd /home/${{ vars.VM_USERNAME }}/neswear-deploy
             if [ "${{ github.event.inputs.environment }}" = "prod" ]; then
               cp .env.prod.example .env
             elif [ "${{ github.event.inputs.environment }}" = "staging" ]; then
