@@ -35,6 +35,7 @@ jobs:
               cp .env.staging.example .env
             fi
             git pull
+            docker compose down -v
             docker compose pull
             docker compose up -d 
             docker compose exec -T backend npm run seed
