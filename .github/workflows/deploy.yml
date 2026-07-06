@@ -12,7 +12,6 @@ on:
         required: true
         type: choice
         options:
-          - dev
           - staging
           - prod
 
@@ -34,8 +33,6 @@ jobs:
               cp .env.prod.example .env
             elif [ "${{ github.event.inputs.environment }}" = "staging" ]; then
               cp .env.staging.example .env
-            else
-              cp .env.dev.example .env
             fi
             git pull
             docker compose pull
