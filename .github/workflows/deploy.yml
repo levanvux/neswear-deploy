@@ -29,13 +29,21 @@ jobs:
           port: 22
           script: |
             cd /home/${{ vars.VM_USERNAME }}/neswear-deploy
-            if [ "${{ github.event.inputs.environment }}" = "prod" ]; then
-              cp .env.prod.example .env
-            elif [ "${{ github.event.inputs.environment }}" = "staging" ]; then
-              cp .env.staging.example .env
+
+            ENV="${{ github.event.inputs.environment }}"
+            if [ -z "$ENV" ]; then
+              ENV="${{ github.event.client_payload.environment }}"
             fi
+
+            if [ "$ENV" = "prod" ]; then
+              cp .env.prod.example .env
+            elif [ "$ENV" = "staging" ]; then
+              cp .env.staging.example .env
+            else
+              exit 1
+            fi
+
             git pull
-            docker compose down -v
             docker compose pull
             docker compose up -d 
             docker compose exec -T backend npm run seed
