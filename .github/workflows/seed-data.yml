@@ -1,14 +1,14 @@
-name: Deploy
+name: Seed database
 
 on:
   workflow_dispatch:
 
 jobs:
-  deploy_cloud:
+  seed_db:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to cloud VM
+      - name: Seed database
         uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ vars.VM_HOST }}
@@ -17,6 +17,4 @@ jobs:
           port: 22
           script: |
             cd /home/${{ vars.VM_USERNAME }}/neswear-deploy
-            git pull origin main
-            docker compose pull
-            docker compose up -d
+            docker compose exec -T backend npm run seed
