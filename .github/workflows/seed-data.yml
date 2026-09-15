@@ -17,4 +17,4 @@ jobs:
           port: 22
           script: |
             cd /home/${{ vars.VM_USERNAME }}/neswear-deploy
-            docker compose exec -T backend npm run seed
+            docker compose exec -T backend npm run seed:prod
