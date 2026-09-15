@@ -43,6 +43,7 @@ services:
 
   nginx:
     image: nginx:1.25-alpine
+    container_name: neswear_nginx
     restart: unless-stopped
     ports:
       - "80:80"
