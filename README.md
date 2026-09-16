@@ -13,7 +13,7 @@ architecture-beta
         service fe(server)[Frontend Repository] in gh
         service ghcr(database)[GHCR] in gh
 
-    group vm(cloud)[VM]
+    group vm(cloud)[Virtual Machine]
     group docker_compose(cloud)[Docker Compose] in vm
         service dk(server)[Docker Compose] in docker_compose
         service nginx(server)[Nginx] in docker_compose
