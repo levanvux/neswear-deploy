@@ -14,12 +14,13 @@ architecture-beta
         service ghcr(database)[GHCR] in gh
 
     group vm(cloud)[VM]
-        service dk(server)[Docker Compose] in vm
-        service nginx(server)[Nginx] in vm
-        service becn(server)[Backend] in vm
-        service fecn(server)[Frontend] in vm
-        service pg(database)[PostgreSQL] in vm
-        service redis(database)[Redis] in vm
+    group docker_compose(cloud)[Docker Compose] in vm
+        service dk(server)[Docker Compose] in docker_compose
+        service nginx(server)[Nginx] in docker_compose
+        service becn(server)[Backend] in docker_compose
+        service fecn(server)[Frontend] in docker_compose
+        service pg(database)[PostgreSQL] in docker_compose
+        service redis(database)[Redis] in docker_compose
 
     be:R --> L:ghcr
     fe:L --> R:ghcr
